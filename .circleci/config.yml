@@ -1,0 +1,36 @@
+defaults: &defaults
+  working_directory: ~/app
+  docker:
+    - image: circleci/node:10
+
+version: 2
+jobs:
+  publish:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command: npm i
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Code linting
+          command: npm run lint -- --plugin log
+      - run:
+          name: Set NPM tokens
+          command: echo -e $NPMRC > ~/.npmrc
+      - run:
+          name: Publish to NPM
+          command: npx published --git-tag
+
+workflows:
+  version: 2
+  ci-cd:
+    jobs:
+      - publish:
+          context: org-global

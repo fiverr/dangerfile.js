@@ -1,0 +1,26 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "globals": {},
+  "extends": [
+    "@fiverr/eslint-config-fiverr/rules/base",
+    "@fiverr/eslint-config-fiverr/rules/es6",
+  ],
+  "rules": {
+    "comma-dangle": ["error", "always-multiline"]
+  },
+  "overrides": [
+    {
+      "files": [ "bin.js" ],
+      "rules": {
+        "no-console": 0
+      },
+    }
+  ]
+}
