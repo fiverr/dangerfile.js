@@ -26,7 +26,7 @@ if (ref !== 'master') {
     let file;
     for (file in modified_files) {
         const diff = await diffForFile(file);
-        if (diff.includes('dangerouslySetInnerHTML')) {
+        if (diff && diff.includes('dangerouslySetInnerHTML')) {
 
             // TODO: Add an informative link to UGC security concern
             warn(`Please make sure you do not introduce and user generated content using dangerouslySetInnerHTML (${file}).`);
