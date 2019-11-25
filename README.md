@@ -5,5 +5,5 @@ Follow documentation at [danger.js](https://danger.systems/js/)
 Create a dangerfile and run it.
 
 ```
-npx @fiverr/dangerfile
+npx @fiverr/dangerfile@1
 ```
