@@ -42,7 +42,7 @@ async function dangerouslySetInnerHTML(callback = message) {
         if (count(after, 'dangerouslySetInnerHTML') > count(before, 'dangerouslySetInnerHTML')) {
 
             // TODO: Add an informative link to UGC security concern
-            callback(`Please make sure you do not introduce and user generated content using dangerouslySetInnerHTML (\`${file}\`).`);
+            callback(`Please make sure you do not introduce any user generated content using dangerouslySetInnerHTML (\`${file}\`).`);
         }
     }
 }
