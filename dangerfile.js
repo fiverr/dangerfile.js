@@ -1,55 +1,99 @@
-const count = (string, substring) => (string.match(new RegExp(substring, 'g')) || []).length;
+const {
+    message,
+    danger,
+    warn,
+    fail
+} = require('danger');
 
 const {
-    github: {
-        pr: {
-            body,
-            base: {
-                ref,
-            },
-        },
-    },
     git: {
-        modified_files,
-        diffForFile,
-    },
+        modified_files: modifiedFiles,
+        diffForFile
+    }
 } = danger;
 
-function noPRDescription(callback = message) {
-    if (!body || body.trim().length < 2) {
-        callback('Please add a description to the pull request.');
-    }
+// Fails if a description section is missing.
+const includesDescription =
+    !danger.github.pr.body ||
+    !danger.github.pr.body.includes('## Description');
+if (!includesDescription) {
+    const title = 'Missing Description?';
+    const idea =`
+        Please add a description. To do so, add a "## Description" section to your PR description.
+        This is a good place to explain all your intentions.
+    `;
+    fail(`<b>${title}</b> - <i>${idea}</i> 🔅`);
 }
 
-function baseNotMaster(callback = message) {
-    if (ref !== 'master') {
-        callback(`The base branch for this PR is \`${ref}\`. Are you sure you want to target something other than the \`master\` branch?`);
-    }
+// Warns if there are changes to package.json, and tags the team.
+const packageJsonFile = danger.git.fileMatch('package.json');
+const packageLockFile = danger.git.fileMatch('package-lock.json');
+if (packageJsonFile.modified && !packageLockFile.modified) {
+    const title = 'NPM warning';
+    const idea = `
+        Changes were made to \`package.json\` but not to \`package-lock.json\`.
+        Did you forgot \`npm i\` before commit? 🔒
+    `;
+    warn(`<b>${title}</b> - <i>${idea}</i>`);
 }
 
-async function dangerouslySetInnerHTML(callback = message) {
-// React dangerouslySetInnerHTML and user generated content
+// Warns if there are no unit tests added
+const hasTestChanges = modifiedFiles.filter((filepath) =>
+    filepath.includes('spec|test'),
+).length > 0;
+if (!hasTestChanges) {
+    const title = 'What about unit tests?';
+    const idea = 'It seems you did some changes but you did not update/add any unit tests.';
+    warn(`<b>${title}</b> - <i>${idea}</i> 🤔`);
+}
+
+
+// Warns in case of big PR.
+const files = modifiedFiles.filter((modifiedFile) => !['package-lock.json'].includes(modifiedFile));
+const buildScore = async(files) => {
+    let score = 0;
     let file;
+    let table = `
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Additions</th>
+                    <th>Deletions</th>
+                </tr>
+            </thead>
+            <tbody>`;
 
-    for (file of modified_files) {
-        const diff = await diffForFile(file);
+    for (file of files) {
+        const { added, removed } = await diffForFile(file);
+        const additionRegex = /\+ {2}/g;
+        const deletionRegex = /- {2}/g;
+        const additions = (added.match(additionRegex) || []).length;
+        const deletions = (removed.match(deletionRegex) || []).length;
+        table += `
+                <tr>
+                    <td><b>${file}</b></td>
+                    <td>${'+'.repeat(additions)}</td>
+                    <td>${'-'.repeat(deletions)}</td>
+                </tr>`;
 
-        if (!diff) {
-            continue;
-        }
-
-        const {before, after} = diff;
-        if (count(after, 'dangerouslySetInnerHTML') > count(before, 'dangerouslySetInnerHTML')) {
-
-            // TODO: Add an informative link to UGC security concern
-            callback(`Please make sure you do not introduce any user generated content using dangerouslySetInnerHTML (\`${file}\`).`);
-        }
+        score += additions;
     }
-}
 
+    table += `
+            </tbody>
+        </table>`;
 
-(async() => {
-    noPRDescription(fail);
-    baseNotMaster(warn);
-    await dangerouslySetInnerHTML(warn);
-})();
+    message(table);
+
+    if (score > 3) {
+        const title = 'Big PR!';
+        const idea = `
+            Pull Request size seems relatively large.
+            If Pull Request contains multiple changes, split each into separate PR will helps faster, easier review.
+        `;
+        warn(`<b>${title}</b> - <i>${idea}</i> 🤯`);
+    }
+};
+
+buildScore(files);

@@ -1,13 +1,5 @@
 #!/usr/bin/env node
 
-const dangerfile = require('dangerfile');
+const execute = require('async-execute');
 
-(async() => {
-    try {
-        const message = await dangerfile(__dirname);
-        console.info(message);
-    } catch (error) {
-        console.error(error);
-        process.exit(1);
-    }
-})();
+execute('./node_modules/.bin/danger ci', { pipe: true });
