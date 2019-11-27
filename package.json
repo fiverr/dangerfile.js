@@ -1,6 +1,6 @@
 {
   "name": "@fiverr/dangerfile",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "⚠️ Centralised dangerfile",
   "author": "Fiverr SRE",
   "license": "MIT",
@@ -14,15 +14,18 @@
     "url": "git+ssh://git@github.com/fiverr/dangerfile.js.git"
   },
   "scripts": {
+    "test": "jest",
     "lint": "eslint *.js"
   },
   "bin": "bin.js",
   "dependencies": {
+    "async-execute": "^1.1.0",
     "danger": "^9.2.8"
   },
   "devDependencies": {
     "@fiverr/eslint-config-fiverr": "^3.0.0",
     "eslint": "^5.16.0",
-    "eslint-plugin-log": "^1.1.0"
+    "eslint-plugin-log": "^1.1.0",
+    "jest": "^24.9.0"
   }
 }
