@@ -12,9 +12,6 @@
     "@fiverr/eslint-config-fiverr/rules/base",
     "@fiverr/eslint-config-fiverr/rules/es6",
   ],
-  "rules": {
-    "comma-dangle": ["error", "always-multiline"]
-  },
   "overrides": [
     {
       "files": [ "bin.js" ],
@@ -29,6 +26,16 @@
         "fail": true,
         "warn": true,
         "message": true
+      }
+    },
+    {
+      "files": [
+        "*/__mocks__/*",
+        "**/spec.js",
+        "**/*.spec.js"
+      ],
+      "env": {
+        "jest": true
       }
     }
   ]

@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 
-const dangerfile = require('dangerfile');
+const { join } = require('path');
+const execute = require('async-execute');
 
-(async() => {
-    try {
-        const message = await dangerfile(__dirname);
-        console.info(message);
-    } catch (error) {
-        console.error(error);
-        process.exit(1);
-    }
-})();
+const dangerfilePath = join(__dirname, 'dangerfile.js');
+const dangerCommand = `npx danger ci -d ${dangerfilePath} -f`;
+
+execute(dangerCommand).catch((error) => {
+    console.log(error);
+    process.exit(1);
+});

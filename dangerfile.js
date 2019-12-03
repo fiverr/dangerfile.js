@@ -1,55 +1,33 @@
-const count = (string, substring) => (string.match(new RegExp(substring, 'g')) || []).length;
+const {
+    danger,
+    warn,
+    fail,
+    schedule
+} = require('danger');
 
 const {
+    git: {
+        modified_files: modifiedFiles,
+        fileMatch,
+        diffForFile
+    },
     github: {
         pr: {
-            body,
-            base: {
-                ref,
-            },
-        },
-    },
-    git: {
-        modified_files,
-        diffForFile,
-    },
+            body
+        }
+    }
 } = danger;
 
-function noPRDescription(callback = message) {
-    if (!body || body.trim().length < 2) {
-        callback('Please add a description to the pull request.');
-    }
-}
+const dangerousSetInnerHTMLWarn = require('./src/dangerousSetInnerHTMLWarn');
+const descriptionPresenceFail = require('./src/descriptionPresenceFail');
+const gemfileLockUpdateWarn = require('./src/gemfileLockUpdateWarn');
+const packageLockUpdateWarn = require('./src/packageLockUpdateWarn');
+const sizeDiffWarn = require('./src/sizeDiffWarn');
+const unitTestsPresenceWarn = require('./src/unitTestsPresenceWarn');
 
-function baseNotMaster(callback = message) {
-    if (ref !== 'master') {
-        callback(`The base branch for this PR is \`${ref}\`. Are you sure you want to target something other than the \`master\` branch?`);
-    }
-}
-
-async function dangerouslySetInnerHTML(callback = message) {
-// React dangerouslySetInnerHTML and user generated content
-    let file;
-
-    for (file of modified_files) {
-        const diff = await diffForFile(file);
-
-        if (!diff) {
-            continue;
-        }
-
-        const {before, after} = diff;
-        if (count(after, 'dangerouslySetInnerHTML') > count(before, 'dangerouslySetInnerHTML')) {
-
-            // TODO: Add an informative link to UGC security concern
-            callback(`Please make sure you do not introduce any user generated content using dangerouslySetInnerHTML (\`${file}\`).`);
-        }
-    }
-}
-
-
-(async() => {
-    noPRDescription(fail);
-    baseNotMaster(warn);
-    await dangerouslySetInnerHTML(warn);
-})();
+schedule(dangerousSetInnerHTMLWarn.run(modifiedFiles, diffForFile, warn));
+schedule(descriptionPresenceFail.run(body, fail));
+schedule(gemfileLockUpdateWarn.run(fileMatch, warn));
+schedule(packageLockUpdateWarn.run(fileMatch, warn));
+schedule(sizeDiffWarn.run(modifiedFiles, diffForFile, warn));
+schedule(unitTestsPresenceWarn.run(modifiedFiles, warn));
