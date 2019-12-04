@@ -5,7 +5,7 @@
  * @default
  */
 const MESSAGE = `<b>Performance!</b> - <i>
-"binding.pry" may cause performance hits on production environments.
+"binding.pry" will cause performance hits on production environments.
 Please remove debugging tools from your code.
 </i> ⛔️`;
 
