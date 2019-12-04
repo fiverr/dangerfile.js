@@ -4,20 +4,21 @@
  * @type {String}
  * @default
  */
-const MESSAGE = `<b>Security! (XSS)</b> - <i>
-Please make sure you do not introduce any user generated content using *dangerouslySetInnerHTML*.
+const MESSAGE = `<b>Performance!</b> - <i>
+"binding.pry" will cause performance hits on production environments.
+Please remove debugging tools from your code.
 </i> ⛔️`;
 
 /**
- * Return true if detect "dangerouslySetInnerHTML" in str.
+ * Return true if detect "binding.pry" in str.
  * @param {String} str
  * @returns {Boolean}
  */
-const dangerouslySetInnerHTMLDetected = (str) =>
-    str && str.includes('dangerouslySetInnerHTML');
+const bindingPryDetected = (str) =>
+    str && str.includes('binding.pry');
 
 /**
- * Warn if detect "dangerouslySetInnerHTML" added.
+ * Fail if detect "binding.pry" added.
  * @param {String[]} files - list of modified files.
  * @param {Function} diffForFile - danger diffForFile.
  * @param {Function} fail - danger fail.
@@ -31,7 +32,7 @@ const run = async(files, diffForFile, fail) => {
     for (const file of files) {
         const { after } = await diffForFile(file);
 
-        if (dangerouslySetInnerHTMLDetected(after)) {
+        if (bindingPryDetected(after)) {
             fail(MESSAGE);
             return;
         }
