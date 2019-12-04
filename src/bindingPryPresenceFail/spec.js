@@ -72,16 +72,16 @@ describe('bindingPryPresenceFail', () => {
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, warn)
+                run(files, diffForFile, fail)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should call warn with correct message', () =>
-                run(files, diffForFile, warn)
+            test('should call fail with correct message', () =>
+                run(files, diffForFile, fail)
                     .then(() => {
-                        expect(warn).toHaveBeenCalledWith(MESSAGE);
+                        expect(fail).toHaveBeenCalledWith(MESSAGE);
                     })
             );
         });

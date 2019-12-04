@@ -18,13 +18,13 @@ const bindingPryDetected = (str) =>
     str && str.includes('binding.pry');
 
 /**
- * Warn if detect "binding.pry" added.
+ * Fail if detect "binding.pry" added.
  * @param {String[]} files - list of modified files.
  * @param {Function} diffForFile - danger diffForFile.
- * @param {Function} warn - danger warn.
+ * @param {Function} fail - danger fail.
  * @returns {Promise<undefined>}
  */
-const run = async(files, diffForFile, warn) => {
+const run = async(files, diffForFile, fail) => {
     if (!files) {
         return;
     }
@@ -33,7 +33,7 @@ const run = async(files, diffForFile, warn) => {
         const { after } = await diffForFile(file);
 
         if (bindingPryDetected(after)) {
-            warn(MESSAGE);
+            fail(MESSAGE);
             return;
         }
     }
