@@ -20,10 +20,10 @@ const dangerouslySetInnerHTMLDetected = (str) =>
  * Warn if detect "dangerouslySetInnerHTML" added.
  * @param {String[]} files - list of modified files.
  * @param {Function} diffForFile - danger diffForFile.
- * @param {Function} warn - danger warn.
+ * @param {Function} fail - danger fail.
  * @returns {Promise<undefined>}
  */
-const run = async(files, diffForFile, warn) => {
+const run = async(files, diffForFile, fail) => {
     if (!files) {
         return;
     }
@@ -32,7 +32,7 @@ const run = async(files, diffForFile, warn) => {
         const { after } = await diffForFile(file);
 
         if (dangerouslySetInnerHTMLDetected(after)) {
-            warn(MESSAGE);
+            fail(MESSAGE);
             return;
         }
     }
