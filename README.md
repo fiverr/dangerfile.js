@@ -4,7 +4,7 @@
 Run Fiverr's dangerfile.
 
 ```
-npx @fiverr/dangerfile@1
+npx @fiverr/dangerfile@2
 ```
 
 ## Contribute
