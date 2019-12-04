@@ -10,15 +10,15 @@ const DIFF_CONTAINS_BINDING_PRY= `
     blabla
 `;
 
-describe('dangerousSetInnerHTMLWarn', () => {
+describe('bindingPryPresenceFail', () => {
     describe('.run', () => {
         const diffForFile = jest.fn();
-        const warn = jest.fn();
+        const fail = jest.fn();
 
         let files;
 
         afterEach(() => {
-            warn.mockRestore();
+            fail.mockRestore();
         });
 
         describe('when files are undefined', () => {
@@ -27,16 +27,16 @@ describe('dangerousSetInnerHTMLWarn', () => {
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, warn)
+                run(files, diffForFile, fail)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should not call warn', () =>
-                run(files, diffForFile, warn)
+            test('should not call fail', () =>
+                run(files, diffForFile, fail)
                     .then(() => {
-                        expect(warn).not.toHaveBeenCalled();
+                        expect(fail).not.toHaveBeenCalled();
                     })
             );
         });
@@ -47,21 +47,21 @@ describe('dangerousSetInnerHTMLWarn', () => {
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, warn)
+                run(files, diffForFile, fail)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should not call warn', () =>
-                run(files, diffForFile, warn)
+            test('should not call fail', () =>
+                run(files, diffForFile, fail)
                     .then(() => {
-                        expect(warn).not.toHaveBeenCalled();
+                        expect(fail).not.toHaveBeenCalled();
                     })
             );
         });
 
-        describe('when a file contain "binding.pry"', () => {
+        describe('when a file contains "binding.pry"', () => {
             beforeEach(() => {
                 files = ['a.js'];
                 diffForFile.mockImplementation(() =>
