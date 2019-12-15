@@ -57,11 +57,9 @@ describe('descriptionPresenceFail', () => {
                 );
             });
 
-            describe('when body does not include a proper markdown description section', () => {
+            describe('when body does not include enough text', () => {
                 beforeEach(() => {
-                    body = `
-                        No proper description part!!
-                    `;
+                    body = '!';
                 });
 
                 test('should resolve', () =>

@@ -1,23 +1,15 @@
 {
-  "parserOptions": {
-    "ecmaVersion": 9,
-    "sourceType": "module"
-  },
-  "env": {
-    "node": true,
-    "es6": true
-  },
-  "globals": {},
   "extends": [
     "@fiverr/eslint-config-fiverr/rules/base",
     "@fiverr/eslint-config-fiverr/rules/es6",
+    "@fiverr/eslint-config-fiverr/rules/jest"
   ],
   "overrides": [
     {
       "files": [ "bin.js" ],
       "rules": {
         "no-console": 0
-      },
+      }
     },
     {
       "files": [ "dangerfile.js" ],
@@ -26,16 +18,6 @@
         "fail": true,
         "warn": true,
         "message": true
-      }
-    },
-    {
-      "files": [
-        "*/__mocks__/*",
-        "**/spec.js",
-        "**/*.spec.js"
-      ],
-      "env": {
-        "jest": true
       }
     }
   ]
