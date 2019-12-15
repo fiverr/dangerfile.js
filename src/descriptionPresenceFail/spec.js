@@ -59,9 +59,7 @@ describe('descriptionPresenceFail', () => {
 
             describe('when body does not include a proper markdown description section', () => {
                 beforeEach(() => {
-                    body = `
-                        No proper description part!!
-                    `;
+                    body = '';
                 });
 
                 test('should resolve', () =>

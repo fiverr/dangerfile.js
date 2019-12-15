@@ -5,7 +5,7 @@
  * @default
  */
 const MESSAGE = `<b>Missing Description?</b> - <i>
-Please add a description. To do so, add a "## Description" section to your PR description.
+Please add a description to your pull request.
 This is a good place to explain your intentions and show off screenshots/diagram of either new features, areas design that have changed.
 </i> 🔅`;
 
@@ -15,7 +15,7 @@ This is a good place to explain your intentions and show off screenshots/diagram
  * @returns {Boolean}
  */
 const includesMarkdownDescription = (body) =>
-    body && body.includes('## Description');
+    body && body.length > 1;
 
 /**
  * Check if there is a minimal PR description.
