@@ -34,6 +34,9 @@ jobs:
           paths:
             - ./node_modules
       - run:
+          name: Tests
+          command: npm t -- --ci
+      - run:
           name: Code linting
           command: npm run lint -- --plugin log
       - run:
