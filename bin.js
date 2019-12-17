@@ -2,7 +2,7 @@
 
 const { join } = require('path');
 const execute = require('async-execute');
-const { name, version } = require('./package.json')
+const { name, version } = require('./package.json');
 
 console.info(`Running ${name} v${version}`);
 const dangerfilePath = join(__dirname, 'dangerfile.js');
