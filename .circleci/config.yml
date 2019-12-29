@@ -40,6 +40,9 @@ jobs:
           name: Code linting
           command: npm run lint -- --plugin log
       - run:
+          name: Set npmrc file
+          command: echo -e $NPMRC > ~/.npmrc
+      - run:
           name: Publish to NPM
           command: npx published --git-tag
 
