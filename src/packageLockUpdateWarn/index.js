@@ -1,3 +1,5 @@
+const exist = require('@does/exist');
+
 /**
  * Danger message warning.
  * @constant
@@ -18,8 +20,9 @@ Did you forget to do \`npm i\` before commit?
 const run = async(fileMatch, warn) => {
     const packageJsonFile = fileMatch('package.json');
     const packageLockFile = fileMatch('package-lock.json');
+    const lockFileExists = await exist('package-lock.json');
 
-    if (packageJsonFile.modified && !packageLockFile.modified) {
+    if (packageJsonFile.modified && !packageLockFile.modified && lockFileExists) {
         warn(MESSAGE);
     }
 };

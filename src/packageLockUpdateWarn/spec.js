@@ -1,16 +1,22 @@
-const {
-    MESSAGE,
-    run
-} = require('.');
+let MESSAGE;
+let run;
 
 describe('packageLockUpdateWarn', () => {
     describe('.run', () => {
         const fileMatch = jest.fn();
         const warn = jest.fn();
 
+        beforeAll(() => {
+            jest.mock('@does/exist', () => jest.fn(() => true));
+           ({ MESSAGE, run } = require('.'));
+        });
         afterEach(() => {
             fileMatch.mockRestore();
             warn.mockRestore();
+            jest.clearAllMocks();
+        });
+        afterAll(() => {
+            jest.unmock('@does/exist');
         });
 
         describe('when package.json is modified', () => {
@@ -56,6 +62,14 @@ describe('packageLockUpdateWarn', () => {
                             expect(warn).toHaveBeenCalledWith(MESSAGE);
                         })
                 );
+
+                test('should not call warn when package-lock does not exist', () => {
+                    require('@does/exist').mockImplementationOnce(jest.fn(() => false));
+                    run(fileMatch, warn)
+                            .then(() => {
+                                expect(warn).not.toHaveBeenCalled();
+                            })
+                });
             });
         });
 

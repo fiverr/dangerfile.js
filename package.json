@@ -1,6 +1,6 @@
 {
   "name": "@fiverr/dangerfile",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "⚠️ Centralised dangerfile",
   "author": "Fiverr SRE",
   "license": "MIT",
@@ -19,6 +19,7 @@
   },
   "bin": "bin.js",
   "dependencies": {
+    "@does/exist": "^1.1.0",
     "async-execute": "^1.1.0",
     "danger": "^9.2.9"
   },
