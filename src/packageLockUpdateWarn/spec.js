@@ -8,7 +8,7 @@ describe('packageLockUpdateWarn', () => {
 
         beforeAll(() => {
             jest.mock('@does/exist', () => jest.fn(() => true));
-           ({ MESSAGE, run } = require('.'));
+            ({ MESSAGE, run } = require('.'));
         });
         afterEach(() => {
             fileMatch.mockRestore();
@@ -66,9 +66,9 @@ describe('packageLockUpdateWarn', () => {
                 test('should not call warn when package-lock does not exist', () => {
                     require('@does/exist').mockImplementationOnce(jest.fn(() => false));
                     run(fileMatch, warn)
-                            .then(() => {
-                                expect(warn).not.toHaveBeenCalled();
-                            })
+                        .then(() => {
+                            expect(warn).not.toHaveBeenCalled();
+                        });
                 });
             });
         });
