@@ -4,8 +4,8 @@
  * @type {String}
  * @default
  */
-const MESSAGE = `<b>Security! (XSS)</b> - <i>
-Please make sure that any user generated content has been sanitized <b>before</b> using *dangerouslySetInnerHTML*.
+const MESSAGE = `<b>Security! (XSS)</b><br><i>
+Please make sure that any user generated content has been sanitized by using Futile's <a href="https://docs.fiverr-gw.com/@fiverr-private/futile/function/index.html#static-function-createSanitizedMarkup" target="_blank">createSanitizedMarkup</a> method <b>before</b> using dangerouslySetInnerHTML.
 </i> ⛔️`;
 
 /**

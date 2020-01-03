@@ -3,14 +3,14 @@ const {
     run
 } = require('.');
 
-const DIFF_CONTAINS_DANGEROUSLY_SET_INNER_HTML= `
+const DIFF_CONTAINS_DANGEROUSLY_SET_INNER_HTML = `
     blabla
     dangerouslySetInnerHTML
     blabla
     blabla
 `;
 
-const DIFF_CONTAINS_DANGEROUSLY_SET_INNER_HTML_SANITIZED= `
+const DIFF_CONTAINS_DANGEROUSLY_SET_INNER_HTML_SANITIZED = `
     blabla
     dangerouslySetInnerHTML={createSanitizedMarkup(string)}
     blabla
