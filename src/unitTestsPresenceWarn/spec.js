@@ -13,7 +13,7 @@ describe('sizeDiffWarn', () => {
             warn.mockRestore();
         });
 
-        describe('when files is undefined', () => {
+        describe('when files are undefined', () => {
             beforeEach(() => {
                 files = undefined;
             });
@@ -53,7 +53,7 @@ describe('sizeDiffWarn', () => {
             );
         });
 
-        describe('when test files found', () => {
+        describe('when test files have been found', () => {
             beforeEach(() => {
                 files = [
                     'blabla.js',
@@ -76,7 +76,7 @@ describe('sizeDiffWarn', () => {
             );
         });
 
-        describe('when test files not found', () => {
+        describe('when test files have not been found and js files were changed', () => {
             beforeEach(() => {
                 files = ['blabla.js'];
             });
@@ -92,6 +92,26 @@ describe('sizeDiffWarn', () => {
                 run(files, warn)
                     .then(() => {
                         expect(warn).toHaveBeenCalledWith(MESSAGE);
+                    })
+            );
+        });
+
+        describe('when test files have not been found, but no js files were changed', () => {
+            beforeEach(() => {
+                files = ['blabla.json'];
+            });
+
+            test('should resolve', () =>
+                run(files, warn)
+                    .then((data) => {
+                        expect(data).toBe(undefined);
+                    })
+            );
+
+            test('should not call warn', () =>
+                run(files, warn)
+                    .then(() => {
+                        expect(warn).not.toHaveBeenCalled();
                     })
             );
         });

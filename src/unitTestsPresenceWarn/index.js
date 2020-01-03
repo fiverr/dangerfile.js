@@ -5,7 +5,7 @@
  * @default
  */
 const MESSAGE = `<b>What about unit tests?</b> - <i>
-It seems you did some changes but you did not update/add any unit tests.
+It seems like you made some changes, but you did not update/add any tests.
 </i> 🤔`;
 
 /**
@@ -16,6 +16,16 @@ It seems you did some changes but you did not update/add any unit tests.
 const testsFileFound = (files) =>
     files.some((file) =>
         /(test|spec)/g.test(file)
+    );
+
+/**
+ * Return true if .mjs/.js/ files found.
+ * @param {String[]} files - list of files.
+ * @returns {Boolean}
+ */
+const jsFileFound = (files) =>
+    files.some((file) =>
+        /\.m?js$/g.test(file)
     );
 
 /**
@@ -37,7 +47,7 @@ const run = async(files, warn) => {
         return;
     }
 
-    if (!testsFileFound(files)) {
+    if (!testsFileFound(files) && jsFileFound(files)) {
         warn(MESSAGE);
     }
 };
