@@ -7,8 +7,8 @@ const {
 
 const {
     git: {
-        modified_files: modifiedFiles,
-        added_files: addedFiles,
+        modified_files: modifiedFiles = [],
+        added_files: addedFiles = [],
         fileMatch,
         diffForFile
     },
