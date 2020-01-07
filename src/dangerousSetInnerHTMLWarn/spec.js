@@ -3,9 +3,16 @@ const {
     run
 } = require('.');
 
-const DIFF_CONTAINS_DANGEROUSLY_SET_INNER_HTML= `
+const DIFF_CONTAINS_DANGEROUSLY_SET_INNER_HTML = `
     blabla
-    +  dangerouslySetInnerHTML
+    dangerouslySetInnerHTML
+    blabla
+    blabla
+`;
+
+const DIFF_CONTAINS_DANGEROUSLY_SET_INNER_HTML_SANITIZED = `
+    blabla
+    dangerouslySetInnerHTML={createSanitizedMarkup(string)}
     blabla
     blabla
 `;
@@ -61,7 +68,7 @@ describe('dangerousSetInnerHTMLWarn', () => {
             );
         });
 
-        describe('when a file contain "dangerouslySetInnerHTML"', () => {
+        describe('when a file contains "dangerouslySetInnerHTML" and is not sanitized', () => {
             beforeEach(() => {
                 files = ['a.js'];
                 diffForFile.mockImplementation(() =>
@@ -82,6 +89,31 @@ describe('dangerousSetInnerHTMLWarn', () => {
                 run(files, diffForFile, warn)
                     .then(() => {
                         expect(warn).toHaveBeenCalledWith(MESSAGE);
+                    })
+            );
+        });
+
+        describe('when a file contains "dangerouslySetInnerHTML" and is sanitized', () => {
+            beforeEach(() => {
+                files = ['a.js'];
+                diffForFile.mockImplementation(() =>
+                    Promise.resolve({
+                        after: DIFF_CONTAINS_DANGEROUSLY_SET_INNER_HTML_SANITIZED
+                    })
+                );
+            });
+
+            test('should resolve', () =>
+                run(files, diffForFile, warn)
+                    .then((data) => {
+                        expect(data).toBe(undefined);
+                    })
+            );
+
+            test('should not call warn', () =>
+                run(files, diffForFile, warn)
+                    .then(() => {
+                        expect(warn).not.toHaveBeenCalled();
                     })
             );
         });

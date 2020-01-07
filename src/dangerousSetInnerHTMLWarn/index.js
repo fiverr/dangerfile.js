@@ -4,17 +4,17 @@
  * @type {String}
  * @default
  */
-const MESSAGE = `<b>Security! (XSS)</b> - <i>
-Please make sure you do not introduce any user generated content using *dangerouslySetInnerHTML*.
+const MESSAGE = `<b>Security! (XSS)</b><br><i>
+Please make sure that any user generated content has been sanitized by using Futile's <a href="https://docs.fiverr-gw.com/@fiverr-private/futile/function/index.html#static-function-createSanitizedMarkup" target="_blank">createSanitizedMarkup</a> method <b>before</b> using dangerouslySetInnerHTML.
 </i> ⛔️`;
 
 /**
- * Return true if detect "dangerouslySetInnerHTML" in str.
+ * Return true if "dangerouslySetInnerHTML" is in string and "createSanitizedMarkup" isn't.
  * @param {String} str
  * @returns {Boolean}
  */
 const dangerouslySetInnerHTMLDetected = (str) =>
-    str && str.includes('dangerouslySetInnerHTML');
+    str && str.includes('dangerouslySetInnerHTML') && !str.includes('createSanitizedMarkup(');
 
 /**
  * Warn if detect "dangerouslySetInnerHTML" added.
