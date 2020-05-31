@@ -7,7 +7,7 @@
 const MESSAGE = `<b>Ownership warning!</b> - <i>
 Changes were made to \`Deployment files\` but not to \`.fiverr/OWNERSHIP\`.
 Make sure updating the latter if any ownership changes were made.
-E.g: Introduced a change in the \`team\` or \`group\` label.
+E.g: Introduced a change in the \`team\` or \`group\` labels.
 </i>`;
 
 /**
