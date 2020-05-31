@@ -7,7 +7,8 @@
 const MESSAGE = `<b>Ownership warning!</b> - <i>
 Changes were made to \`Deployment files\` but not to \`.fiverr/OWNERSHIP\`.
 Make sure updating the latter if any ownership changes were made.
-</i> 🔒`;
+E.g: Introduced a change in the \`team\` or \`group\` label.
+</i>`;
 
 /**
  * Warn in case deplyoment files were modified and OWNERSHIP was not.
@@ -18,9 +19,6 @@ Make sure updating the latter if any ownership changes were made.
 const run = async(fileMatch, warn) => {
     const deploymentFiles = fileMatch('kube/core/deployment.*');
     const ownershipFile = fileMatch('.fiverr/OWNERSHIP');
-
-    console.log(`Deployment file modified: ${deploymentFiles.modified}`);
-    console.log(`Ownership file modified: ${ownershipFile.modified}`);
 
     if (deploymentFiles.modified && !ownershipFile.modified) {
         warn(MESSAGE);
