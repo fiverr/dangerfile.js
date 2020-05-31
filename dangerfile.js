@@ -29,6 +29,7 @@ const packageLockUpdateWarn = require('./src/packageLockUpdateWarn');
 const sizeDiffWarn = require('./src/sizeDiffWarn');
 const unitTestsPresenceWarn = require('./src/unitTestsPresenceWarn');
 const deploymentUpdateWarn = require('./src/deploymentUpdateWarn');
+const chimeraConnectorUpdateWarn = require('./src/chimeraConnectorUpdateWarn');
 
 schedule(bindingPryPresenceFail.run(changedFiles, diffForFile, fail));
 schedule(dangerousSetInnerHTMLWarn.run(changedFiles, diffForFile, warn));
@@ -38,3 +39,4 @@ schedule(packageLockUpdateWarn.run(fileMatch, warn));
 schedule(sizeDiffWarn.run(modifiedFiles, diffForFile, warn));
 schedule(unitTestsPresenceWarn.run(changedFiles, warn));
 schedule(deploymentUpdateWarn.run(fileMatch, warn));
+schedule(chimeraConnectorUpdateWarn.run(fileMatch, warn));

@@ -17,10 +17,10 @@ E.g: Introduced a change in the \`team\` or \`group\` labels.
  * @returns {Promise<undefined>}
  */
 const run = async(fileMatch, warn) => {
-    const deploymentFiles = fileMatch('kube/core/deployment.*');
+    const deploymentFile = fileMatch('kube/core/deployment.*');
     const ownershipFile = fileMatch('.fiverr/OWNERSHIP');
 
-    if (deploymentFiles.modified && !ownershipFile.modified) {
+    if (deploymentFile.modified && !ownershipFile.modified) {
         warn(MESSAGE);
     }
 };
