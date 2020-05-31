@@ -28,6 +28,7 @@ const gemfileLockUpdateWarn = require('./src/gemfileLockUpdateWarn');
 const packageLockUpdateWarn = require('./src/packageLockUpdateWarn');
 const sizeDiffWarn = require('./src/sizeDiffWarn');
 const unitTestsPresenceWarn = require('./src/unitTestsPresenceWarn');
+const deploymentUpdateWarn = require('./src/deploymentUpdateWarn');
 
 schedule(bindingPryPresenceFail.run(changedFiles, diffForFile, fail));
 schedule(dangerousSetInnerHTMLWarn.run(changedFiles, diffForFile, warn));
@@ -36,3 +37,4 @@ schedule(gemfileLockUpdateWarn.run(fileMatch, warn));
 schedule(packageLockUpdateWarn.run(fileMatch, warn));
 schedule(sizeDiffWarn.run(modifiedFiles, diffForFile, warn));
 schedule(unitTestsPresenceWarn.run(changedFiles, warn));
+schedule(deploymentUpdateWarn.run(fileMatch, warn));
