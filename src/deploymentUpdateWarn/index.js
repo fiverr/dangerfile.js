@@ -19,6 +19,9 @@ const run = async(fileMatch, warn) => {
     const deploymentFiles = fileMatch('kube/core/deployment.*');
     const ownershipFile = fileMatch('.fiverr/OWNERSHIP');
 
+    console.log(`Deployment file modified: ${deploymentFiles.modified}`);
+    console.log(`Ownership file modified: ${ownershipFile.modified}`);
+
     if (deploymentFiles.modified && !ownershipFile.modified) {
         warn(MESSAGE);
     }
