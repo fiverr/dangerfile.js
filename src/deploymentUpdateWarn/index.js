@@ -4,7 +4,7 @@
  * @type {String}
  * @default
  */
-const MESSAGE = `<b>RVM warning!</b> - <i>
+const MESSAGE = `<b>Ownership warning!</b> - <i>
 Changes were made to \`Deployment files\` but not to \`.fiverr/OWNERSHIP\`.
 Make sure updating the latter if any ownership changes were made.
 </i> 🔒`;
