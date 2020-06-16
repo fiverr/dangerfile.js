@@ -5,7 +5,7 @@
  * @default
  */
 const MESSAGE = `<b>Cannot merge release candidate!</b> - <i>
-It seems you forgot to remove "-rc" in your package.json file.
+It seems you forgot to remove "-rc" from your package.json file.
 </i> 🧐`;
 
 /**
