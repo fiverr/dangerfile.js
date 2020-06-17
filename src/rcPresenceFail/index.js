@@ -5,7 +5,7 @@
  * @default
  */
 const MESSAGE = `<b>Cannot merge release candidate!</b> - <i>
-It seems you forgot to remove "-rc" from your package.json file.
+Please remove "-rc" from your package.json file before merging to master.
 </i> 🧐`;
 
 /**
@@ -14,7 +14,7 @@ It seems you forgot to remove "-rc" from your package.json file.
  * @returns {Boolean}
  */
 const rcDetected = (str) =>
-    str && str.includes('-rc');
+    str && /version(.*)-rc/.test(str);
 
 /**
  * Fail if detect "-rc" added to package.json.

@@ -5,7 +5,7 @@ const {
 
 const DIFF_CONTAINS_RC= `
     blabla
-    +  blabla-rc
+    +  "version": "1.1.1-rc"
     blabla
     blabla
 `;
