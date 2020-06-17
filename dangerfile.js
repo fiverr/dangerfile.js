@@ -22,6 +22,7 @@ const {
 const changedFiles = [...addedFiles, ...modifiedFiles];
 
 const bindingPryPresenceFail = require('./src/bindingPryPresenceFail');
+const rcPresenceFail = require('./src/rcPresenceFail');
 const dangerousSetInnerHTMLWarn = require('./src/dangerousSetInnerHTMLWarn');
 const descriptionPresenceFail = require('./src/descriptionPresenceFail');
 const gemfileLockUpdateWarn = require('./src/gemfileLockUpdateWarn');
@@ -30,6 +31,7 @@ const sizeDiffWarn = require('./src/sizeDiffWarn');
 const unitTestsPresenceWarn = require('./src/unitTestsPresenceWarn');
 
 schedule(bindingPryPresenceFail.run(changedFiles, diffForFile, fail));
+schedule(rcPresenceFail.run(changedFiles, diffForFile, fail));
 schedule(dangerousSetInnerHTMLWarn.run(changedFiles, diffForFile, warn));
 schedule(descriptionPresenceFail.run(body, fail));
 schedule(gemfileLockUpdateWarn.run(fileMatch, warn));
