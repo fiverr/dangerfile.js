@@ -1,3 +1,7 @@
+const fs = require('fs');
+
+jest.mock('fs');
+
 const {
     MESSAGE,
     run
@@ -19,6 +23,32 @@ describe('packageLockUpdateWarn', () => {
                     fileMatch
                         .mockImplementationOnce(() => ({ modified: true }))
                         .mockImplementationOnce(() => ({ modified: true }));
+
+                    fs.existsSync.mockReturnValue(true);
+                });
+
+                test('should resolve', () =>
+                    run(fileMatch, warn)
+                        .then((data) => {
+                            expect(data).toBe(undefined);
+                        })
+                );
+
+                test('should not call warn', () =>
+                    run(fileMatch, warn)
+                        .then(() => {
+                            expect(warn).not.toHaveBeenCalled();
+                        })
+                );
+            });
+
+            describe('when package-lock.json doesn\'t exist', () => {
+                beforeEach(() => {
+                    fileMatch
+                        .mockImplementationOnce(() => ({ modified: true }))
+                        .mockImplementationOnce(() => ({ modified: false }));
+
+                    fs.existsSync.mockReturnValue(false);
                 });
 
                 test('should resolve', () =>
@@ -41,6 +71,8 @@ describe('packageLockUpdateWarn', () => {
                     fileMatch
                         .mockImplementationOnce(() => ({ modified: true }))
                         .mockImplementationOnce(() => ({ modified: false }));
+
+                    fs.existsSync.mockReturnValue(true);
                 });
 
                 test('should resolve', () =>
