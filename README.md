@@ -13,6 +13,7 @@ Example usage as CircleCI step:
     docker:
       - image: circleci/node
     steps:
+      - checkout
       - run:
           name: danger
           command: npx @fiverr/dangerfile@2
