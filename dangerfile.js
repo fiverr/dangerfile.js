@@ -4,6 +4,7 @@ const {
     fail,
     schedule
 } = require('danger');
+const exist = require('@does/exist');
 
 const {
     git: {
@@ -22,6 +23,7 @@ const {
 const changedFiles = [...addedFiles, ...modifiedFiles];
 
 const bindingPryPresenceFail = require('./src/bindingPryPresenceFail');
+const changelog = require('./src/changelog');
 const rcPresenceFail = require('./src/rcPresenceFail');
 const dangerousSetInnerHTMLWarn = require('./src/dangerousSetInnerHTMLWarn');
 const descriptionPresenceFail = require('./src/descriptionPresenceFail');
@@ -31,6 +33,7 @@ const sizeDiffWarn = require('./src/sizeDiffWarn');
 const unitTestsPresenceWarn = require('./src/unitTestsPresenceWarn');
 
 schedule(bindingPryPresenceFail.run(changedFiles, diffForFile, fail));
+schedule(changelog.run(diffForFile, exist, warn));
 schedule(rcPresenceFail.run(changedFiles, diffForFile, fail));
 schedule(dangerousSetInnerHTMLWarn.run(changedFiles, diffForFile, warn));
 schedule(descriptionPresenceFail.run(body, fail));
