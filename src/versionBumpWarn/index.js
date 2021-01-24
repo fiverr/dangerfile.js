@@ -5,8 +5,7 @@
  * @default
  */
 const MESSAGE = `<b>Version Bump!</b> - <i>
-Do you want to publish a new version of this package after merging this PR?
-Don't forget to bump the version in \`package.json\` before merging to the master.
+Do you want to publish a new version of this package after merging this PR? Don't forget to bump the version in \`package.json\` before merging to the master.
 </i> 📦`;
 
 /**
