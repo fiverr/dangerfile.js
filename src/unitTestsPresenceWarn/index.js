@@ -19,13 +19,13 @@ const testsFileFound = (files) =>
     );
 
 /**
- * Return true if .mjs/.js/ files found.
+ * Return true if .mjs/.js/.ts files found.
  * @param {String[]} files - list of files.
  * @returns {Boolean}
  */
-const jsFileFound = (files) =>
+const sourceFilesFound = (files) =>
     files.some((file) =>
-        /\.m?js$/g.test(file)
+        /\.((m?js)|ts)$/g.test(file)
     );
 
 /**
@@ -47,7 +47,7 @@ const run = async(files, warn) => {
         return;
     }
 
-    if (!testsFileFound(files) && jsFileFound(files)) {
+    if (!testsFileFound(files) && sourceFilesFound(files)) {
         warn(MESSAGE);
     }
 };
