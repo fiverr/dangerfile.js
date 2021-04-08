@@ -53,14 +53,10 @@ describe('sizeDiffWarn', () => {
             );
         });
 
-        describe('when test files have been found', () => {
-            beforeEach(() => {
-                files = [
-                    'blabla.js',
-                    'blabla.spec.js'
-                ];
-            });
-
+        describe.each([
+            [['blabla.js', 'blabla.spec.js']],
+            [['blabla.ts', 'blabla.spec.ts']]
+        ])('when test files have been found', (files) => {
             test('should resolve', () =>
                 run(files, warn)
                     .then((data) => {
@@ -76,11 +72,10 @@ describe('sizeDiffWarn', () => {
             );
         });
 
-        describe('when test files have not been found and js files were changed', () => {
-            beforeEach(() => {
-                files = ['blabla.js'];
-            });
-
+        describe.each([
+            [['blabla.js']],
+            [['blabla.ts']]
+        ])('when test files have not been found and source files were changed', (files) => {
             test('should resolve', () =>
                 run(files, warn)
                     .then((data) => {
@@ -96,7 +91,7 @@ describe('sizeDiffWarn', () => {
             );
         });
 
-        describe('when test files have not been found, but no js files were changed', () => {
+        describe('when test files have not been found, but no js/ts files were changed', () => {
             beforeEach(() => {
                 files = ['blabla.json'];
             });
