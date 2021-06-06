@@ -35,6 +35,7 @@ const packageLockUpdateWarn = require('./src/packageLockUpdateWarn');
 const sizeDiffWarn = require('./src/sizeDiffWarn');
 const unitTestsPresenceWarn = require('./src/unitTestsPresenceWarn');
 const versionBumpWarn = require('./src/versionBumpWarn');
+const fitIconsUsageWarn = require('./src/fitIconsUsageWarn');
 
 schedule(bindingPryPresenceFail.run(changedFiles, diffForFile, fail));
 schedule(changelog.run(diffForFile, exist, warn));
@@ -46,3 +47,4 @@ schedule(packageLockUpdateWarn.run(fileMatch, warn));
 schedule(sizeDiffWarn.run(modifiedFiles, diffForFile, warn));
 schedule(unitTestsPresenceWarn.run(changedFiles, warn));
 schedule(versionBumpWarn.run(fileContents, diffForFile, exist, warn));
+schedule(fitIconsUsageWarn.run(changedFiles, diffForFile, warn));
