@@ -29,8 +29,13 @@ const run = async(fileContents, diffForFile, exist, warn) => {
     }
 
     const diff = await diffForFile('package.json');
-    if (diff && JSON.parse(diff.before).version !== JSON.parse(diff.after).version) {
-    // Version was changed
+
+    if (!diff || !diff.before) {
+        return;
+    }
+
+    if (JSON.parse(diff.before).version !== JSON.parse(diff.after).version) {
+        // Version was changed
         return;
     }
 
