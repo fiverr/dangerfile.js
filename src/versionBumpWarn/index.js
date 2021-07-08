@@ -34,7 +34,7 @@ const run = async(fileContents, diffForFile, exist, warn) => {
         return;
     }
 
-    if (JSON.parse(diff.before).version !== JSON.parse(diff.after).version) {
+    if (diff && JSON.parse(diff.before).version !== JSON.parse(diff.after).version) {
         // Version was changed
         return;
     }
