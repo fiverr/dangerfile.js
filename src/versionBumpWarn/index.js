@@ -18,7 +18,7 @@ Don't forget to bump the version in \`package.json\` before merging to the maste
 const run = async(fileContents, diffForFile, exist, warn) => {
     const condition = await exist('package.json');
     if (!condition) {
-    // Required files do not exist
+        // Required files do not exist
         return;
     }
 
