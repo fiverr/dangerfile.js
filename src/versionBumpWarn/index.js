@@ -30,7 +30,7 @@ const run = async(fileContents, diffForFile, exist, warn) => {
 
     const diff = await diffForFile('package.json');
 
-    if (!diff || !diff.before) {
+    if (diff && !diff.before) {
         return;
     }
 
