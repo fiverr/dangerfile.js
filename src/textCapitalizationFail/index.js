@@ -5,8 +5,15 @@
  * @default
  */
 const MESSAGE = `<b>Cannot merge release candidate!</b> - <i>
-Please do not use "text-transform: capitalize" before merging to master because this violates localization rules.
-</i> 🧐`;
+Please do not use "text-transform: capitalize" because this violates localization rules.
+</i> 🌐`;
+
+/**
+ * Return true if .css/.scss/.js/.ts files found.
+ * @param {String} file - modified file.
+ * @returns {Boolean}
+ */
+const isEligibleFile = (file) =>/\.(js|ts|scss|css)$/g.test(file);
 
 /**
  * Return true if detect "text-transform: capitalize" in the modified files.
@@ -25,11 +32,13 @@ const textCapitalizationDetected = (str) =>
  */
 const run = async(files = [], diffForFile, fail) => {
     for (const file of files) {
-        const { after } = await diffForFile(file);
+        if (isEligibleFile(file)) {
+            const { after } = await diffForFile(file);
 
-        if (textCapitalizationDetected(after)) {
-            fail(MESSAGE);
-            return;
+            if (textCapitalizationDetected(after)) {
+                fail(MESSAGE);
+                return;
+            }
         }
     }
 };
