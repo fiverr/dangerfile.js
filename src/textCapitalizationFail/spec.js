@@ -10,7 +10,7 @@ const DIFF_CONTAINS_RC= `
     blabla
 `;
 
-describe('rcPresenceFail', () => {
+describe('textCapitalizationFail', () => {
     describe('.run', () => {
         const diffForFile = jest.fn();
         const fail = jest.fn();
