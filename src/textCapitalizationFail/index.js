@@ -5,7 +5,7 @@
  * @default
  */
 const MESSAGE = `<b>Cannot merge release candidate!</b> - <i>
-Please do not use "text-transform: capitalize" because this violates localization rules.
+Please do not use "text-transform: capitalize" OR "capitalize" method from '@fiverr-private/futile' because this violates localization rules.
 </i> 🌐`;
 
 /**
@@ -21,10 +21,10 @@ const isEligibleFile = (file) => (/\.(js|ts|scss|css)$/g.test(file) && !/(test|s
  * @returns {Boolean}
  */
 const textCapitalizationDetected = (str) =>
-    str && /text-transform:\s+capitalize/.test(str);
+    str && (/text-transform:\s+capitalize/.test(str) || /capitalize.+futile/.test(str));
 
 /**
- * Fail if detect "text-transform: capitalize" added to a modified file.
+ * Fail if detect "text-transform: capitalize" or consumption of "capitalize" from futile added to a modified file.
  * @param {String[]} files - list of modified files.
  * @param {Function} diffForFile - danger diffForFile.
  * @param {Function} fail - danger fail.

@@ -3,9 +3,16 @@ const {
     run
 } = require('.');
 
-const DIFF_CONTAINS_RC= `
+const DIFF_CONTAINS_TEXT_TRANSFORM = `
     blabla
     +  "text-transform: capitalize"
+    blabla
+    blabla
+`;
+
+const DIFF_CONTAINS_FUTILE_CAPITALIZE = `
+    blabla
+    +  "import { capitalize } from '@fiverr-private/futile"
     blabla
     blabla
 `;
@@ -61,12 +68,37 @@ describe('textCapitalizationFail', () => {
             );
         });
 
+        describe('when js file contains consumption of futile capitalize', () => {
+            beforeEach(() => {
+                files = ['a.js', 'package.json'];
+                diffForFile.mockImplementation(() =>
+                    Promise.resolve({
+                        after: DIFF_CONTAINS_FUTILE_CAPITALIZE
+                    })
+                );
+            });
+
+            test('should resolve', () =>
+                run(files, diffForFile, fail)
+                    .then((data) => {
+                        expect(data).toBe(undefined);
+                    })
+            );
+
+            test('should call fail with correct message', () =>
+                run(files, diffForFile, fail)
+                    .then(() => {
+                        expect(fail).toHaveBeenCalledWith(MESSAGE);
+                    })
+            );
+        });
+
         describe('when js file contains "text-transform: capitalize"', () => {
             beforeEach(() => {
                 files = ['a.js', 'package.json'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_RC
+                        after: DIFF_CONTAINS_TEXT_TRANSFORM
                     })
                 );
             });
@@ -91,7 +123,7 @@ describe('textCapitalizationFail', () => {
                 files = ['a.ts', 'package.json'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_RC
+                        after: DIFF_CONTAINS_TEXT_TRANSFORM
                     })
                 );
             });
@@ -116,7 +148,7 @@ describe('textCapitalizationFail', () => {
                 files = ['a.css', 'package.json'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_RC
+                        after: DIFF_CONTAINS_TEXT_TRANSFORM
                     })
                 );
             });
@@ -141,7 +173,7 @@ describe('textCapitalizationFail', () => {
                 files = ['a.scss', 'package.json'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_RC
+                        after: DIFF_CONTAINS_TEXT_TRANSFORM
                     })
                 );
             });
@@ -166,7 +198,7 @@ describe('textCapitalizationFail', () => {
                 files = ['spec.js'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_RC
+                        after: DIFF_CONTAINS_TEXT_TRANSFORM
                     })
                 );
             });
@@ -191,7 +223,7 @@ describe('textCapitalizationFail', () => {
                 files = ['a.json'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_RC
+                        after: DIFF_CONTAINS_TEXT_TRANSFORM
                     })
                 );
             });
