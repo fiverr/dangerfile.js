@@ -9,11 +9,11 @@ Please do not use "text-transform: capitalize" because this violates localizatio
 </i> 🌐`;
 
 /**
- * Return true if .css/.scss/.js/.ts files found.
+ * Return true if .css/.scss/.js/.ts files found and it's not a test
  * @param {String} file - modified file.
  * @returns {Boolean}
  */
-const isEligibleFile = (file) =>/\.(js|ts|scss|css)$/g.test(file);
+const isEligibleFile = (file) => (/\.(js|ts|scss|css)$/g.test(file) && !/(test|spec)/g.test(file));
 
 /**
  * Return true if detect "text-transform: capitalize" in the modified files.

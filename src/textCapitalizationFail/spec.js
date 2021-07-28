@@ -161,7 +161,32 @@ describe('rcPresenceFail', () => {
             );
         });
 
-        describe('when another file contains "-rc"', () => {
+        describe('when spec file contains "text-transform: capitalize"', () => {
+            beforeEach(() => {
+                files = ['spec.js'];
+                diffForFile.mockImplementation(() =>
+                    Promise.resolve({
+                        after: DIFF_CONTAINS_RC
+                    })
+                );
+            });
+
+            test('should resolve', () =>
+                run(files, diffForFile, fail)
+                    .then((data) => {
+                        expect(data).toBe(undefined);
+                    })
+            );
+
+            test('should not call fail', () =>
+                run(files, diffForFile, fail)
+                    .then(() => {
+                        expect(fail).not.toHaveBeenCalled();
+                    })
+            );
+        });
+
+        describe('when another file contains "text-transform: capitalize"', () => {
             beforeEach(() => {
                 files = ['a.json'];
                 diffForFile.mockImplementation(() =>
