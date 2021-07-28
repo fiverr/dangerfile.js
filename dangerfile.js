@@ -36,10 +36,12 @@ const sizeDiffWarn = require('./src/sizeDiffWarn');
 const unitTestsPresenceWarn = require('./src/unitTestsPresenceWarn');
 const versionBumpWarn = require('./src/versionBumpWarn');
 const fitIconsUsageWarn = require('./src/fitIconsUsageWarn');
+const textCapitalizationFail = require('./src/textCapitalizationFail');
 
 schedule(bindingPryPresenceFail.run(changedFiles, diffForFile, fail));
 schedule(changelog.run(diffForFile, exist, warn));
 schedule(rcPresenceFail.run(changedFiles, diffForFile, fail));
+schedule(textCapitalizationFail.run(changedFiles, diffForFile, fail));
 schedule(dangerousSetInnerHTMLWarn.run(changedFiles, diffForFile, warn));
 schedule(descriptionPresenceFail.run(body, fail));
 schedule(gemfileLockUpdateWarn.run(fileMatch, warn));
