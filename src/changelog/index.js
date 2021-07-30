@@ -16,7 +16,7 @@ Update changelog file with changes made in the version update.
  * @returns {Promise<undefined>}
  */
 const run = async(diffForFile, exist, warn) => {
-    const condition = await exist('package.json') && await exist('CHANGELOG.md');
+    const condition = await exist('package.json');
     if (!condition) {
     // Required files do not exist
         return;
