@@ -57,7 +57,6 @@ describe('changelog', () => {
     });
     describe('version was changed but not changelog', () => {
         test('should warn', async() => {
-            exist.mockImplementation((file) => Promise.resolve(file === 'package.json'));
             diffForFile.mockImplementation((file) => Promise.resolve(
                 file === 'package.json'
                     ? { before: '{"version":"1.0.0"}', after: '{"version":"1.0.1"}' }
