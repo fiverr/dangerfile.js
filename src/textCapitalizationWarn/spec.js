@@ -3,22 +3,29 @@ const {
     run
 } = require('.');
 
-const DIFF_CONTAINS_TEXT_TRANSFORM = `
+const DIFF_CONTAINS_FUTILE_CAPITALIZE = `
     blabla
-    +  "text-transform: capitalize"
+    +  "import { capitalize } from '@fiverr-private/futile"
     blabla
     blabla
 `;
 
-describe('textCapitalizationFail', () => {
+const DIFF_CONTAINS_LODASH_CAPITALIZE = `
+    blabla
+    +  "import { capitalize } from '@fiverr-private/futile"
+    blabla
+    blabla
+`;
+
+describe('textCapitalizationWarn', () => {
     describe('.run', () => {
         const diffForFile = jest.fn();
-        const fail = jest.fn();
+        const warn = jest.fn();
 
         let files;
 
         afterEach(() => {
-            fail.mockRestore();
+            warn.mockRestore();
         });
 
         describe('when files are undefined', () => {
@@ -27,16 +34,16 @@ describe('textCapitalizationFail', () => {
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, fail)
+                run(files, diffForFile, warn)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should not call fail', () =>
-                run(files, diffForFile, fail)
+            test('should not call warn', () =>
+                run(files, diffForFile, warn)
                     .then(() => {
-                        expect(fail).not.toHaveBeenCalled();
+                        expect(warn).not.toHaveBeenCalled();
                     })
             );
         });
@@ -47,166 +54,166 @@ describe('textCapitalizationFail', () => {
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, fail)
+                run(files, diffForFile, warn)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should not call fail', () =>
-                run(files, diffForFile, fail)
+            test('should not call warn', () =>
+                run(files, diffForFile, warn)
                     .then(() => {
-                        expect(fail).not.toHaveBeenCalled();
+                        expect(warn).not.toHaveBeenCalled();
                     })
             );
         });
 
-        describe('when js file contains "text-transform: capitalize"', () => {
+        describe('when js file contains consumption of futile capitalize', () => {
             beforeEach(() => {
                 files = ['a.js', 'package.json'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_TEXT_TRANSFORM
+                        after: DIFF_CONTAINS_FUTILE_CAPITALIZE
                     })
                 );
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, fail)
+                run(files, diffForFile, warn)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should call fail with correct message', () =>
-                run(files, diffForFile, fail)
+            test('should call warn with correct message', () =>
+                run(files, diffForFile, warn)
                     .then(() => {
-                        expect(fail).toHaveBeenCalledWith(MESSAGE);
+                        expect(warn).toHaveBeenCalledWith(MESSAGE);
                     })
             );
         });
 
-        describe('when ts file contains "text-transform: capitalize"', () => {
+        describe('when ts file contains consumption of futile capitalize', () => {
             beforeEach(() => {
                 files = ['a.ts', 'package.json'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_TEXT_TRANSFORM
+                        after: DIFF_CONTAINS_FUTILE_CAPITALIZE
                     })
                 );
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, fail)
+                run(files, diffForFile, warn)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should call fail with correct message', () =>
-                run(files, diffForFile, fail)
+            test('should call warn with correct message', () =>
+                run(files, diffForFile, warn)
                     .then(() => {
-                        expect(fail).toHaveBeenCalledWith(MESSAGE);
+                        expect(warn).toHaveBeenCalledWith(MESSAGE);
                     })
             );
         });
 
-        describe('when css file contains "text-transform: capitalize"', () => {
+        describe('when js file contains consumption of lodash capitalize', () => {
             beforeEach(() => {
-                files = ['a.css', 'package.json'];
+                files = ['a.js', 'package.json'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_TEXT_TRANSFORM
+                        after: DIFF_CONTAINS_LODASH_CAPITALIZE
                     })
                 );
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, fail)
+                run(files, diffForFile, warn)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should call fail with correct message', () =>
-                run(files, diffForFile, fail)
+            test('should call warn with correct message', () =>
+                run(files, diffForFile, warn)
                     .then(() => {
-                        expect(fail).toHaveBeenCalledWith(MESSAGE);
+                        expect(warn).toHaveBeenCalledWith(MESSAGE);
                     })
             );
         });
 
-        describe('when scss file contains "text-transform: capitalize"', () => {
+        describe('when ts file contains consumption of lodash capitalize', () => {
             beforeEach(() => {
-                files = ['a.scss', 'package.json'];
+                files = ['a.ts', 'package.json'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_TEXT_TRANSFORM
+                        after: DIFF_CONTAINS_LODASH_CAPITALIZE
                     })
                 );
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, fail)
+                run(files, diffForFile, warn)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should call fail with correct message', () =>
-                run(files, diffForFile, fail)
+            test('should call warn with correct message', () =>
+                run(files, diffForFile, warn)
                     .then(() => {
-                        expect(fail).toHaveBeenCalledWith(MESSAGE);
+                        expect(warn).toHaveBeenCalledWith(MESSAGE);
                     })
             );
         });
 
-        describe('when spec file contains "text-transform: capitalize"', () => {
+        describe('when spec file contains consumption of futile capitalize', () => {
             beforeEach(() => {
                 files = ['spec.js'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_TEXT_TRANSFORM
+                        after: DIFF_CONTAINS_FUTILE_CAPITALIZE
                     })
                 );
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, fail)
+                run(files, diffForFile, warn)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should not call fail', () =>
-                run(files, diffForFile, fail)
+            test('should not call warn', () =>
+                run(files, diffForFile, warn)
                     .then(() => {
-                        expect(fail).not.toHaveBeenCalled();
+                        expect(warn).not.toHaveBeenCalled();
                     })
             );
         });
 
-        describe('when another file contains "text-transform: capitalize"', () => {
+        describe('when another file contains consumption of lodash capitalize', () => {
             beforeEach(() => {
                 files = ['a.json'];
                 diffForFile.mockImplementation(() =>
                     Promise.resolve({
-                        after: DIFF_CONTAINS_TEXT_TRANSFORM
+                        after: DIFF_CONTAINS_LODASH_CAPITALIZE
                     })
                 );
             });
 
             test('should resolve', () =>
-                run(files, diffForFile, fail)
+                run(files, diffForFile, warn)
                     .then((data) => {
                         expect(data).toBe(undefined);
                     })
             );
 
-            test('should not call fail', () =>
-                run(files, diffForFile, fail)
+            test('should not call warn', () =>
+                run(files, diffForFile, warn)
                     .then(() => {
-                        expect(fail).not.toHaveBeenCalled();
+                        expect(warn).not.toHaveBeenCalled();
                     })
             );
         });
