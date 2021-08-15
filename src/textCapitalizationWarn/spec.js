@@ -5,14 +5,14 @@ const {
 
 const DIFF_CONTAINS_FUTILE_CAPITALIZE = `
     blabla
-    +  "import { capitalize } from '@fiverr-private/futile"
+    +  "import { capitalize } from '@fiverr-private/futile'"
     blabla
     blabla
 `;
 
 const DIFF_CONTAINS_LODASH_CAPITALIZE = `
     blabla
-    +  "import { capitalize } from '@fiverr-private/futile"
+    +  "import { capitalize } from 'lodash'"
     blabla
     blabla
 `;
