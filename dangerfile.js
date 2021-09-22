@@ -37,10 +37,14 @@ const unitTestsPresenceWarn = require('./src/unitTestsPresenceWarn');
 const versionBumpWarn = require('./src/versionBumpWarn');
 const fitIconsUsageWarn = require('./src/fitIconsUsageWarn');
 const rawColorsWarn = require('./src/rawColorsWarn');
+const textCapitalizationFail = require('./src/textCapitalizationFail');
+const textCapitalizationWarn = require('./src/textCapitalizationWarn');
 
 schedule(bindingPryPresenceFail.run(changedFiles, diffForFile, fail));
 schedule(changelog.run(diffForFile, exist, warn));
 schedule(rcPresenceFail.run(changedFiles, diffForFile, fail));
+schedule(textCapitalizationFail.run(changedFiles, diffForFile, fail));
+schedule(textCapitalizationWarn.run(changedFiles, diffForFile, warn));
 schedule(dangerousSetInnerHTMLWarn.run(changedFiles, diffForFile, warn));
 schedule(descriptionPresenceFail.run(body, fail));
 schedule(gemfileLockUpdateWarn.run(fileMatch, warn));
