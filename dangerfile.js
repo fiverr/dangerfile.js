@@ -36,6 +36,7 @@ const sizeDiffWarn = require('./src/sizeDiffWarn');
 const unitTestsPresenceWarn = require('./src/unitTestsPresenceWarn');
 const versionBumpWarn = require('./src/versionBumpWarn');
 const fitIconsUsageWarn = require('./src/fitIconsUsageWarn');
+const rawColorsWarn = require('./src/rawColorsWarn');
 const textCapitalizationFail = require('./src/textCapitalizationFail');
 const textCapitalizationWarn = require('./src/textCapitalizationWarn');
 
@@ -52,3 +53,4 @@ schedule(sizeDiffWarn.run(modifiedFiles, diffForFile, warn));
 schedule(unitTestsPresenceWarn.run(changedFiles, warn));
 schedule(versionBumpWarn.run(fileContents, diffForFile, exist, warn));
 schedule(fitIconsUsageWarn.run(changedFiles, diffForFile, warn));
+schedule(rawColorsWarn.run(changedFiles, diffForFile, warn));
